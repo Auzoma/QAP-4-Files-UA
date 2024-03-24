@@ -65,11 +65,11 @@ def receipt(first_name, last_name, address, city, province, postal_code, phone_n
     print("Monthly Payment:", "${:,.2f}".format(monthly_payment))
     print("\nPrevious Claims:")
     print(f"Claim Number\tClaim Date\tClaim Amount")
-    print("---------------------------------")
+    print("----------------------------------------")
     for i in range(len(claim_numbers)):
         print(f"{claim_numbers[i]}\t{claim_dates[i]}\t${claim_amounts[i]:,.2f}")
-    print("\n=========================================================")
-    print("................THANK YOU ---------------------------------")
+    print("\n=======================================")
+    print("................THANK YOU ---------------")
 
 # Main program loop
 while True:
@@ -81,7 +81,7 @@ while True:
     province = input("Enter customer's province (abbreviated): ").upper()
     while province not in valid_provinces:
         print("Invalid province. Please enter a valid province.")
-        province = input("Enter customer's province (abbreviated): ").upper()
+        province = input("Enter customer's province (Example-ON,NS,NL): ").upper()
     postal_code = input("Enter customer's postal code: ")
     phone_number = input("Enter customer's phone number: ")
     num_cars = int(input("Enter number of cars being insured: "))
