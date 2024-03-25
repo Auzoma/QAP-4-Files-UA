@@ -1,0 +1,72 @@
+// Customer class definition
+class Customer {
+  constructor(name, birthDate, gender, roomPreferences, paymentMethod, mailingAddress, phoneNumber, checkInDate, checkOutDate) {
+    this.name = name;
+    this.birthDate = new Date(birthDate);
+    this.gender = gender;
+    this.roomPreferences = roomPreferences || [];
+    this.paymentMethod = paymentMethod;
+    this.mailingAddress = mailingAddress || {};
+    this.phoneNumber = phoneNumber;
+    this.checkInDate = new Date(checkInDate);
+    this.checkOutDate = new Date(checkOutDate);
+  }
+
+  calculateAge() {
+    const today = new Date();
+    const birthDate = new Date(this.birthDate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    
+    if (
+        today.getMonth() < birthDate.getMonth() ||
+        (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+    ) {
+        age--;
+    }
+    
+    return age;
+  }
+
+  calculateDurationOfStay() {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const checkIn = new Date(this.checkInDate);
+    const checkOut = new Date(this.checkOutDate);
+    const duration = Math.round(Math.abs((checkOut - checkIn) / oneDay));
+    return duration;
+  }
+
+  generateDescription() {
+    return `
+      <div>
+        <h2>Customer Information:</h2>
+        <p>Name: ${this.name}</p>
+        <p>Age: ${this.calculateAge()}</p>
+        <p>Gender: ${this.gender}</p>
+        <p>Room Preferences: ${this.roomPreferences.join(', ')}</p>
+        <p>Payment Method: ${this.paymentMethod}</p>
+        <p>Mailing Address: ${JSON.stringify(this.mailingAddress)}</p>
+        <p>Phone Number: ${this.phoneNumber}</p>
+        <p>Check-In Date: ${this.checkInDate.toDateString()}</p>
+        <p>Check-Out Date: ${this.checkOutDate.toDateString()}</p>
+        <p>Duration of Stay: ${this.calculateDurationOfStay()} days</p>
+      </div>
+    `;
+  }
+}
+
+// Example usage
+const customer = new Customer(
+  "John Doe",
+  "1990-05-15",
+  "Male",
+  ["Non-smoking", "King Bed"],
+  "Credit Card",
+  { street: "123 Main St", city: "Anytown", state: "CA", zip: "12345" },
+  "555-555-5555",
+  "2024-03-20",
+  "2024-03-25"
+);
+
+// Generate and log customer description
+const description = customer.generateDescription();
+console.log(description);
